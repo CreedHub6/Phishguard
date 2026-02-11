@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="scanner-container">
+    <h1><i class="fas fa-link"></i> URL Security Scanner</h1>
+    <p>Enter a URL to check for potential phishing attempts and security risks</p>
+    
+    <!-- POST form for regular submission -->
+    <form method="post" id="urlScannerForm" class="scanner-form">
+        {% csrf_token %}
+        <div class="input-group">
+            <input type="url" id="urlInput" name="url" placeholder="https://example.com" required value="{{ request.POST.url }}">
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-search"></i> Scan URL
+            </button>
+        </div>
+    </form>
+    
+    <!-- AJAX form for interactive scanning -->
+    <form id="urlScannerAjaxForm" style="display: none;">
+        {% csrf_token %}
+        <input type="hidden" id="ajaxUrlInput" name="url">
+    </form>
+    
+    <div id="scanProgress" class="scan-progress" style="display: none;">
+        <h3>Scanning in progress...</h3>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <div id="scanSteps" class="scan-steps"></div>
+    </div>
+    
+    {% if result %}
+    <div class="result-container">
+        <h2>Scan Results for: {{ result.url }}</h2>
+        
+        <div class="result-card {% if result.is_safe %}safe{% else %}warning{% endif %}">
+            <div class="result-header">
+                <i class="fas fa-{% if result.is_safe %}check-circle{% else %}exclamation-triangle{% endif %}"></i>
+                <h3>{{ result.message }}</h3>
+            </div>
+            
+            {% if result.warnings %}
+            <div class="result-details">
+                <h4>Security Warnings:</h4>
+                <ul>
+                    {% for warning in result.warnings %}
+                    <li><i class="fas fa-exclamation-circle"></i> {{ warning }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+            
+            {% if result.domain_info %}
+            <div class="result-details">
+                <h4>Domain Information:</h4>
+                <div class="info-grid">
+                    {% for key, value in result.domain_info.items %}
+                    <div class="info-item">
+                        <strong>{{ key|title }}:</strong> {{ value }}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+            
+            {% if result.redirects %}
+            <div class="result-details">
+                <h4>Redirects:</h4>
+                <ol>
+                    {% for redirect in result.redirects %}
+                    <li>{{ redirect.url }} (Status: {{ redirect.status }})</li>
+                    {% endfor %}
+                </ol>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+    
+    <div class="scanner-info">
+        <h3>What we check:</h3>
+        <div class="info-grid">
+            <div class="info-item">
+                <i class="fas fa-globe"></i>
+                <h4>Domain Analysis</h4>
+                <p>Domain age, registration details, and suspicious patterns</p>
+            </div>
+            <div class="info-item">
+                <i class="fas fa-shield-alt"></i>
+                <h4>Threat Intelligence</h4>
+                <p>Check against known malicious domains and phishing databases</p>
+            </div>
+            <div class="info-item">
+                <i class="fas fa-random"></i>
+                <h4>Redirect Analysis</h4>
+                <p>Identify suspicious redirect chains and URL shorteners</p>
+            </div>
+            <div class="info-item">
+                <i class="fas fa-lock"></i>
+                <h4>Security Protocols</h4>
+                <p>HTTPS implementation and encryption standards</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="/static/js/url_scanner.js"></script>
+{% endblock %}

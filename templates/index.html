@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="hero">
+    <div class="hero-content">
+        <h1>Protect Yourself Online</h1>
+        <p>PhishGuard helps you identify phishing attempts, check password strength, and analyze suspicious emails</p>
+        <div class="hero-buttons">
+            <a href="{% url 'url_scanner' %}" class="btn btn-primary">Scan URL</a>
+            <a href="{% url 'password_checker' %}" class="btn btn-secondary">Check Password</a>
+            <a href="{% url 'email_checker' %}" class="btn btn-tertiary">Analyze Email</a>
+        </div>
+    </div>
+    <div class="hero-image">
+        <i class="fas fa-shield-alt"></i>
+    </div>
+</section>
+
+<section class="features">
+    <h2>Security Features</h2>
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-link"></i>
+            </div>
+            <h3>URL Scanner</h3>
+            <p>Check websites for potential phishing attempts and security risks before visiting them.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-key"></i>
+            </div>
+            <h3>Password Checker</h3>
+            <p>Test your password strength and get recommendations for improving your online security.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-envelope"></i>
+            </div>
+            <h3>Email Analyzer</h3>
+            <p>Detect phishing attempts in email content and identify suspicious characteristics.</p>
+        </div>
+    </div>
+</section>
+
+<section class="stats">
+    <h2>Why Security Matters</h2>
+    <div class="stats-grid">
+        <div class="stat">
+            <h3>3.4B</h3>
+            <p>Phishing emails sent daily</p>
+        </div>
+        <div class="stat">
+            <h3>86%</h3>
+            <p>Organizations experiencing phishing attempts</p>
+        </div>
+        <div class="stat">
+            <h3>$4.35M</h3>
+            <p>Average cost of a data breach</p>
+        </div>
+    </div>
+</section>
+{% endblock %}

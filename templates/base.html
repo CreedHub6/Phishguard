@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhishGuard - Security Toolkit</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/modern.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-shield-alt"></i>
+                <span>PhishGuard</span>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="{% url 'index' %}" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'url_scanner' %}" class="nav-link">URL Scanner</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'password_checker' %}" class="nav-link">Password Checker</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'email_checker' %}" class="nav-link">Email Checker</a>
+                </li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2023 PhishGuard Security Toolkit. All rights reserved.</p>
+            <p>This tool is for educational purposes only. Always exercise caution when browsing online.</p>
+        </div>
+    </footer>
+
+    <script src="/static/js/main.js"></script>
+</body>
+</html>

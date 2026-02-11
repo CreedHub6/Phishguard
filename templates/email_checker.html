@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="scanner-container">
+    <h1><i class="fas fa-envelope"></i> Email Phishing Detector</h1>
+    <p>Paste email content to analyze for potential phishing attempts</p>
+    
+    <form method="post" class="scanner-form">
+        {% csrf_token %}
+        <div class="input-group">
+            <textarea name="email_content" placeholder="Paste email content here..." rows="10" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Analyze Email</button>
+    </form>
+    
+    {% if result %}
+    <div class="result-container">
+        <h2>Email Analysis Results</h2>
+        
+        <div class="result-card {% if result.is_phishing %}warning{% else %}safe{% endif %}">
+            <div class="result-header">
+                <i class="fas fa-{% if result.is_phishing %}exclamation-triangle{% else %}check-circle{% endif %}"></i>
+                <h3>{{ result.verdict }}</h3>
+            </div>
+            
+            {% if result.warnings %}
+            <div class="result-details">
+                <h4>Security Warnings:</h4>
+                <ul>
+                    {% for warning in result.warnings %}
+                    <li><i class="fas fa-exclamation-circle"></i> {{ warning }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+            
+            {% if result.details.links %}
+            <div class="result-details">
+                <h4>Links Found:</h4>
+                <ul>
+                    {% for link in result.details.links %}
+                    <li><i class="fas fa-link"></i> {{ link }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+            
+            {% if result.details.suspicious_keywords %}
+            <div class="result-details">
+                <h4>Suspicious Keywords:</h4>
+                <div class="keyword-list">
+                    {% for keyword in result.details.suspicious_keywords %}
+                    <span class="keyword-tag">{{ keyword }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+            
+            {% if result.details.from_header %}
+            <div class="result-details">
+                <h4>From Header:</h4>
+                <p>{{ result.details.from_header }}</p>
+            </div>
+            {% endif %}
+            
+            {% if result.details.text_content %}
+            <div class="result-details">
+                <h4>Extracted Text Content:</h4>
+                <div class="email-preview">
+                    {{ result.details.text_content }}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        
+        <div class="email-tips">
+            <h3>Email Safety Tips</h3>
+            <ul>
+                <li>Never click on links in suspicious emails</li>
+                <li>Check the sender's email address carefully</li>
+                <li>Look for spelling and grammar mistakes</li>
+                <li>Be wary of urgent requests for personal information</li>
+                <li>When in doubt, contact the organization directly</li>
+            </ul>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

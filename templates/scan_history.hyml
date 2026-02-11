@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="scanner-container">
+    <h1><i class="fas fa-history"></i> Scan History</h1>
+    <p>Review your previous security scans and results</p>
+    
+    {% if scans %}
+    <div class="history-list">
+        {% for scan in scans %}
+        <div class="history-item">
+            <div class="history-header">
+                <div>
+                    <h3>{{ scan.get_scan_type_display }}</h3>
+                    <p class="history-date">{{ scan.created_at }}</p>
+                </div>
+                <span class="badge badge-{{ scan.result.severity|default:'secondary' }}">
+                    {{ scan.result.severity|default:"Unknown"|title }}
+                </span>
+            </div>
+            
+            <div class="history-content">
+                <p><strong>Scanned:</strong> {{ scan.content|truncatechars:100 }}</p>
+                
+                {% if scan.result.score %}
+                <div class="history-score">
+                    <strong>Security Score:</strong> 
+                    <span class="score-value">{{ scan.result.score }}/100</span>
+                </div>
+                {% endif %}
+            </div>
+            
+            <div class="history-actions">
+                <a href="{% if scan.scan_type == 'url' %}{% url 'url_scanner' %}{% elif scan.scan_type == 'password' %}{% url 'password_checker' %}{% else %}{% url 'email_checker' %}{% endif %}" class="btn btn-sm btn-outline">
+                    <i class="fas fa-redo"></i> Rescan
+                </a>
+                <button class="btn btn-sm btn-outline view-details" data-scan-id="{{ scan.id }}">
+                    <i class="fas fa-eye"></i> View Details
+                </button>
+            </div>
+            
+            <div class="history-details" id="details-{{ scan.id }}" style="display: none;">
+                <pre>{{ scan.result|pprint }}</pre>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <i class="fas fa-inbox"></i>
+        <h3>No scan history yet</h3>
+        <p>Your security scans will appear here once you start using the tools.</p>
+        <a href="{% url 'url_scanner' %}" class="btn btn-primary">Start Scanning</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.view-details').forEach(button => {
+        button.addEventListener('click', function() {
+            const scanId = this.getAttribute('data-scan-id');
+            const details = document.getElementById('details-' + scanId);
+            
+            if (details.style.display === 'none') {
+                details.style.display = 'block';
+                this.innerHTML = '<i class="fas fa-eye-slash"></i> Hide Details';
+            } else {
+                details.style.display = 'none';
+                this.innerHTML = '<i class="fas fa-eye"></i> View Details';
+            }
+        });
+    });
+});
+</script>
+{% endblock %}
