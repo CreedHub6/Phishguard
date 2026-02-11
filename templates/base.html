@@ -3,38 +3,190 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PhishGuard - Security Toolkit</title>
+    <title>PhishGuard | Security Toolkit</title>
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/static/css/modern.css">
-    <link rel="stylesheet" href="/static/css/style.css">
+    
+    <style>
+        :root {
+            --brand-primary: #3b82f6;
+            --brand-success: #10b981;
+            --brand-warning: #f59e0b;
+            --brand-danger: #ef4444;
+            --dark-bg: #0f172a;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --text-light: #f8fafc;
+            --text-dim: #94a3b8;
+            --white: #ffffff;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: #0b0f1a;
+            background-image: 
+                radial-gradient(circle at 0% 0%, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 100% 100%, rgba(16, 185, 129, 0.05) 0%, transparent 50%);
+            color: var(--text-light);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- MODERN NAVBAR --- */
+        .navbar {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--white);
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -0.025em;
+        }
+
+        .nav-logo i {
+            color: var(--brand-primary);
+            filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.5));
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 1rem;
+        }
+
+        .nav-link {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+
+        .nav-link:hover {
+            color: var(--white);
+            background: var(--glass-bg);
+        }
+
+        /* Active link styling - you can apply this class dynamically in your templates */
+        .nav-link.active {
+            color: var(--white);
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        /* --- MAIN CONTENT AREA --- */
+        main {
+            flex: 1;
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        /* --- FOOTER --- */
+        .footer {
+            padding: 3rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+            padding: 0 2rem;
+        }
+
+        .footer-content p {
+            color: var(--text-dim);
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-logo {
+            margin-bottom: 1.5rem;
+            opacity: 0.5;
+            filter: grayscale(1);
+        }
+
+        /* --- MOBILE MENU --- */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--white);
+            padding: 0.5rem;
+            border-radius: 6px;
+        }
+
+        @media (max-width: 768px) {
+            .hamburger { display: block; }
+            .nav-menu {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: #0f172a;
+                padding: 1.5rem;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            .nav-menu.active { display: flex; }
+        }
+    </style>
 </head>
 <body>
+
     <nav class="navbar">
         <div class="nav-container">
-            <div class="nav-logo">
-                <i class="fas fa-shield-alt"></i>
+            <a href="{% url 'index' %}" class="nav-logo">
+                <i class="fas fa-shield-halved"></i>
                 <span>PhishGuard</span>
-            </div>
-            <ul class="nav-menu">
-                <li class="nav-item">
-                    <a href="{% url 'index' %}" class="nav-link">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a href="{% url 'url_scanner' %}" class="nav-link">URL Scanner</a>
-                </li>
-                <li class="nav-item">
-                    <a href="{% url 'password_checker' %}" class="nav-link">Password Checker</a>
-                </li>
-                <li class="nav-item">
-                    <a href="{% url 'email_checker' %}" class="nav-link">Email Checker</a>
-                </li>
+            </a>
+            
+            <button class="hamburger" id="nav-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="{% url 'index' %}" class="nav-link">Home</a></li>
+                <li><a href="{% url 'url_scanner' %}" class="nav-link">URL Scanner</a></li>
+                <li><a href="{% url 'password_checker' %}" class="nav-link">Password Checker</a></li>
+                <li><a href="{% url 'email_checker' %}" class="nav-link">Email Checker</a></li>
             </ul>
-            <div class="hamburger">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </div>
         </div>
     </nav>
 
@@ -45,11 +197,37 @@
 
     <footer class="footer">
         <div class="footer-content">
-            <p>&copy; 2023 PhishGuard Security Toolkit. All rights reserved.</p>
-            <p>This tool is for educational purposes only. Always exercise caution when browsing online.</p>
+            <div class="footer-logo">
+                <i class="fas fa-shield-halved fa-2x"></i>
+            </div>
+            <p>&copy; 2026 PhishGuard Intelligence. Built for a safer web.</p>
+            <p style="color: var(--brand-primary); font-weight: 500;">
+                <i class="fas fa-code"></i> Educational Security Initiative
+            </p>
         </div>
     </footer>
 
-    <script src="/static/js/main.js"></script>
+    <script>
+        // Simple Mobile Menu Toggle
+        const navToggle = document.getElementById('nav-toggle');
+        const navMenu = document.getElementById('nav-menu');
+
+        navToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            const icon = navToggle.querySelector('i');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-xmark');
+        });
+
+        // Close menu on click outside
+        document.addEventListener('click', (e) => {
+            if (!navToggle.contains(e.target) && !navMenu.contains(e.target)) {
+                navMenu.classList.remove('active');
+                navToggle.querySelector('i').classList.add('fa-bars');
+                navToggle.querySelector('i').classList.remove('fa-xmark');
+            }
+        });
+    </script>
 </body>
 </html>
+
