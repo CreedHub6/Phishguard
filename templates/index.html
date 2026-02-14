@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
-
 {% block content %}
+<<<<<<< HEAD
 <section class="hero-wrapper">
     <div class="container hero-container">
         <div class="hero-content">
@@ -26,10 +26,263 @@
                 <i class="fas fa-shield-halved"></i>
                 <div class="pulse-ring"></div>
             </div>
+=======
+
+<style>
+/* ================= GLOBAL ================= */
+body {
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    font-family: 'Segoe UI', sans-serif;
+    color: #fff;
+}
+
+/* ================= HERO SECTION ================= */
+.hero {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 80px 10%;
+    min-height: 90vh;
+}
+
+.hero-content {
+    max-width: 600px;
+}
+
+.hero h1 {
+    font-size: 48px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    background: linear-gradient(90deg, #00f5a0, #00d9f5);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero p {
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 30px;
+    color: #dcdcdc;
+}
+
+.hero-buttons .btn {
+    padding: 12px 28px;
+    margin-right: 15px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.3s ease-in-out;
+}
+
+.btn-primary {
+    background: #00f5a0;
+    color: #000;
+}
+
+.btn-secondary {
+    background: #00d9f5;
+    color: #000;
+}
+
+.btn-tertiary {
+    background: #ff4d6d;
+    color: #fff;
+}
+
+.btn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+}
+
+/* ================= HERO ICON ================= */
+.hero-image i {
+    font-size: 220px;
+    color: rgba(255,255,255,0.08);
+    animation: pulse 3s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 0.7; }
+    50% { transform: scale(1.1); opacity: 1; }
+    100% { transform: scale(1); opacity: 0.7; }
+}
+
+/* ================= FEATURES ================= */
+.features {
+    padding: 80px 10%;
+    text-align: center;
+}
+
+.features h2 {
+    font-size: 36px;
+    margin-bottom: 50px;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+}
+
+.feature-card {
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(10px);
+    padding: 40px 25px;
+    border-radius: 20px;
+    transition: 0.4s ease;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+    background: rgba(0, 245, 160, 0.1);
+    border-color: #00f5a0;
+}
+
+.feature-icon i {
+    font-size: 40px;
+    margin-bottom: 20px;
+    color: #00f5a0;
+}
+
+.feature-card h3 {
+    font-size: 22px;
+    margin-bottom: 15px;
+}
+
+.feature-card p {
+    font-size: 15px;
+    color: #ddd;
+}
+
+/* ================= STATS ================= */
+.stats {
+    padding: 80px 10%;
+    background: rgba(0,0,0,0.3);
+    text-align: center;
+}
+
+.stats h2 {
+    font-size: 36px;
+    margin-bottom: 40px;
+}
+
+.stats-grid {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    flex-wrap: wrap;
+}
+
+.stat {
+    background: rgba(255,255,255,0.05);
+    padding: 30px 40px;
+    border-radius: 15px;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.stat h3 {
+    font-size: 32px;
+    color: #00f5a0;
+}
+
+.stat p {
+    color: #ccc;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 900px) {
+    .hero {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .hero-image {
+        margin-top: 40px;
+    }
+
+    .stats-grid {
+        flex-direction: column;
+        gap: 20px;
+    }
+}
+</style>
+
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+    <div class="hero-content">
+        <h1>Protect Yourself Online</h1>
+        <p>
+            PhishGuard intelligently scans URLs, analyzes suspicious emails,
+            and evaluates password strength to keep you safe from cyber threats.
+        </p>
+        <div class="hero-buttons">
+            <a href="{% url 'url_scanner' %}" class="btn btn-primary">Scan URL</a>
+            <a href="{% url 'password_checker' %}" class="btn btn-secondary">Check Password</a>
+            <a href="{% url 'email_checker' %}" class="btn btn-tertiary">Analyze Email</a>
+        </div>
+    </div>
+    <div class="hero-image">
+        <i class="fas fa-shield-alt"></i>
+    </div>
+</section>
+
+
+<!-- ================= FEATURES ================= -->
+<section class="features">
+    <h2>Advanced Security Features</h2>
+    <div class="features-grid">
+
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-link"></i>
+            </div>
+            <h3>URL Scanner</h3>
+            <p>Detect phishing links, malicious domains, and suspicious redirects before clicking.</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-key"></i>
+            </div>
+            <h3>Password Strength Checker</h3>
+            <p>Evaluate entropy, detect weak patterns, and improve credential resilience.</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-envelope"></i>
+            </div>
+            <h3>Email Threat Analyzer</h3>
+            <p>Identify spoofed senders, suspicious keywords, and phishing characteristics.</p>
+        </div>
+
+    </div>
+</section>
+
+
+<!-- ================= STATS ================= -->
+<section class="stats">
+    <h2>Why Cybersecurity Matters</h2>
+    <div class="stats-grid">
+        <div class="stat">
+            <h3>3.4B+</h3>
+            <p>Phishing emails sent daily worldwide</p>
+        </div>
+        <div class="stat">
+            <h3>86%</h3>
+            <p>Organizations targeted yearly</p>
+        </div>
+        <div class="stat">
+            <h3>$4.35M</h3>
+            <p>Average global data breach cost</p>
+>>>>>>> 9805493 (ui update)
         </div>
     </div>
 </section>
 
+<<<<<<< HEAD
 <section class="features-section">
     <div class="container">
         <div class="section-header">
@@ -81,4 +334,6 @@
         </div>
     </div>
 </section>
+=======
+>>>>>>> 9805493 (ui update)
 {% endblock %}
